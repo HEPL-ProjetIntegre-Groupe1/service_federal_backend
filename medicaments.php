@@ -5,9 +5,9 @@ include 'config.php';
 function insertMedicament($conn, $nom, $description) {
     $sql = "INSERT INTO medicaments (nom, description) VALUES ('$nom', '$description')";
     if ($conn->query($sql) === TRUE) {
-        echo "Nouveau médicament ajouté avec succès<br>";
+        echo json_encode(array("message" => "Nouveau médicament ajouté avec succès"));
     } else {
-        echo "Erreur : " . $sql . "<br>" . $conn->error . "<br>";
+        echo json_encode(array("error" => "Erreur : " . $sql . "<br>" . $conn->error));
     }
 }
 
@@ -17,11 +17,13 @@ function readMedicaments($conn) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $medicaments = array();
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"]. " - Nom: " . $row["nom"]. " - Description: " . $row["description"]. "<br>";
+            $medicaments[] = $row;
         }
+        echo json_encode($medicaments);
     } else {
-        echo "Aucun médicament trouvé.<br>";
+        echo json_encode(array("message" => "Aucun médicament trouvé."));
     }
 }
 
@@ -29,9 +31,9 @@ function readMedicaments($conn) {
 function updateMedicament($conn, $id, $nouveau_nom, $nouvelle_description) {
     $sql = "UPDATE medicaments SET nom='$nouveau_nom', description='$nouvelle_description' WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Médicament mis à jour avec succès<br>";
+        echo json_encode(array("message" => "Médicament mis à jour avec succès"));
     } else {
-        echo "Erreur de mise à jour : " . $conn->error . "<br>";
+        echo json_encode(array("error" => "Erreur de mise à jour : " . $conn->error));
     }
 }
 
@@ -39,9 +41,9 @@ function updateMedicament($conn, $id, $nouveau_nom, $nouvelle_description) {
 function deleteMedicament($conn, $id) {
     $sql = "DELETE FROM medicaments WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Médicament supprimé avec succès<br>";
+        echo json_encode(array("message" => "Médicament supprimé avec succès"));
     } else {
-        echo "Erreur de suppression : " . $conn->error . "<br>";
+        echo json_encode(array("error" => "Erreur de suppression : " . $conn->error));
     }
 }
 

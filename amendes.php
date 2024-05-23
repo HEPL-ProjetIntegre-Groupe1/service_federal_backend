@@ -1,51 +1,54 @@
 <?php
+header('Content-Type: application/json');
 include 'config.php';
 
-// Fonction pour insérer une amende
+// Function to insert a fine
 function insertAmende($conn, $montant, $description, $citoyen_id) {
     $sql = "INSERT INTO amendes (montant, description, citoyen_id) VALUES ('$montant', '$description', '$citoyen_id')";
     if ($conn->query($sql) === TRUE) {
-        echo "Nouvelle amende ajoutée avec succès<br>";
+        echo json_encode(["message" => "Nouvelle amende ajoutée avec succès"]);
     } else {
-        echo "Erreur : " . $sql . "<br>" . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur : " . $sql . " - " . $conn->error]);
     }
 }
 
-// Fonction pour lire toutes les amendes
+// Function to read all fines
 function readAmendes($conn) {
     $sql = "SELECT id, montant, description, citoyen_id FROM amendes";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $amendes = [];
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"]. " - Montant: " . $row["montant"]. " - Description: " . $row["description"]. " - Citoyen ID: " . $row["citoyen_id"]. "<br>";
+            $amendes[] = $row;
         }
+        echo json_encode($amendes);
     } else {
-        echo "0 résultats<br>";
+        echo json_encode(["message" => "0 résultats"]);
     }
 }
 
-// Fonction pour mettre à jour une amende
+// Function to update a fine
 function updateAmende($conn, $id, $nouveau_montant, $nouvelle_description) {
     $sql = "UPDATE amendes SET montant='$nouveau_montant', description='$nouvelle_description' WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Amende mise à jour avec succès<br>";
+        echo json_encode(["message" => "Amende mise à jour avec succès"]);
     } else {
-        echo "Erreur de mise à jour : " . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur de mise à jour : " . $conn->error]);
     }
 }
 
-// Fonction pour supprimer une amende
+// Function to delete a fine
 function deleteAmende($conn, $id) {
     $sql = "DELETE FROM amendes WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Amende supprimée avec succès<br>";
+        echo json_encode(["message" => "Amende supprimée avec succès"]);
     } else {
-        echo "Erreur de suppression : " . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur de suppression : " . $conn->error]);
     }
 }
 
-// Exécuter les fonctions en fonction des paramètres GET ou POST
+// Execute functions based on GET or POST parameters
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {

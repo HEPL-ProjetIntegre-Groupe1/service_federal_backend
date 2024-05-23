@@ -1,51 +1,54 @@
 <?php
+header('Content-Type: application/json');
 include 'config.php';
 
-// Fonction pour insérer un médecin
+// Function to insert a doctor
 function insertMedecin($conn, $nom, $prenom, $specialite) {
     $sql = "INSERT INTO medecins (nom, prenom, specialite) VALUES ('$nom', '$prenom', '$specialite')";
     if ($conn->query($sql) === TRUE) {
-        echo "Nouveau médecin ajouté avec succès<br>";
+        echo json_encode(["message" => "Nouveau médecin ajouté avec succès"]);
     } else {
-        echo "Erreur : " . $sql . "<br>" . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur : " . $sql . " - " . $conn->error]);
     }
 }
 
-// Fonction pour lire tous les médecins
+// Function to read all doctors
 function readMedecins($conn) {
     $sql = "SELECT id, nom, prenom, specialite FROM medecins";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $medecins = [];
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"]. " - Nom: " . $row["nom"]. " - Prénom: " . $row["prenom"]. " - Spécialité: " . $row["specialite"]. "<br>";
+            $medecins[] = $row;
         }
+        echo json_encode($medecins);
     } else {
-        echo "Aucun médecin trouvé.<br>";
+        echo json_encode(["message" => "Aucun médecin trouvé"]);
     }
 }
 
-// Fonction pour mettre à jour un médecin
+// Function to update a doctor
 function updateMedecin($conn, $id, $nouveau_nom, $nouveau_prenom, $nouvelle_specialite) {
     $sql = "UPDATE medecins SET nom='$nouveau_nom', prenom='$nouveau_prenom', specialite='$nouvelle_specialite' WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Médecin mis à jour avec succès<br>";
+        echo json_encode(["message" => "Médecin mis à jour avec succès"]);
     } else {
-        echo "Erreur de mise à jour : " . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur de mise à jour : " . $conn->error]);
     }
 }
 
-// Fonction pour supprimer un médecin
+// Function to delete a doctor
 function deleteMedecin($conn, $id) {
     $sql = "DELETE FROM medecins WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Médecin supprimé avec succès<br>";
+        echo json_encode(["message" => "Médecin supprimé avec succès"]);
     } else {
-        echo "Erreur de suppression : " . $conn->error . "<br>";
+        echo json_encode(["error" => "Erreur de suppression : " . $conn->error]);
     }
 }
 
-// Exécuter les fonctions en fonction des paramètres GET ou POST
+// Execute functions based on GET or POST parameters
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {

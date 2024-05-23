@@ -1,13 +1,14 @@
 <?php
+header('Content-Type: application/json'); // Set header for JSON output
 include 'config.php';
 
 // Fonction pour insérer un citoyen
 function insertCitoyen($conn, $nom, $prenom, $date_naissance, $adresse) {
     $sql = "INSERT INTO citoyens (nom, prenom, date_naissance, adresse) VALUES ('$nom', '$prenom', '$date_naissance', '$adresse')";
     if ($conn->query($sql) === TRUE) {
-        echo "Nouveau citoyen ajouté avec succès<br>";
+        echo json_encode(array("status" => "success", "message" => "Nouveau citoyen ajouté avec succès"));
     } else {
-        echo "Erreur : " . $sql . "<br>" . $conn->error . "<br>";
+        echo json_encode(array("status" => "error", "message" => "Erreur : " . $sql . " - " . $conn->error));
     }
 }
 
@@ -17,11 +18,13 @@ function readCitoyens($conn) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $citoyens = array();
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["i"]. " - Nom: " . $row["nom"]. " " . $row["prenom"]. " - Date de naissance: " . $row["date_naissance"]. " - Adresse: " . $row["adresse"]. "<br>";
+            $citoyens[] = $row;
         }
+        echo json_encode(array("status" => "success", "data" => $citoyens));
     } else {
-        echo "0 résultats<br>";
+        echo json_encode(array("status" => "error", "message" => "0 résultats"));
     }
 }
 
@@ -29,9 +32,9 @@ function readCitoyens($conn) {
 function updateCitoyen($conn, $id, $nouveau_nom, $nouveau_prenom, $nouvelle_date_naissance, $nouvelle_adresse) {
     $sql = "UPDATE citoyens SET nom='$nouveau_nom', prenom='$nouveau_prenom', date_naissance='$nouvelle_date_naissance', adresse='$nouvelle_adresse' WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Citoyen mis à jour avec succès<br>";
+        echo json_encode(array("status" => "success", "message" => "Citoyen mis à jour avec succès"));
     } else {
-        echo "Erreur de mise à jour : " . $conn->error . "<br>";
+        echo json_encode(array("status" => "error", "message" => "Erreur de mise à jour : " . $conn->error));
     }
 }
 
@@ -39,9 +42,9 @@ function updateCitoyen($conn, $id, $nouveau_nom, $nouveau_prenom, $nouvelle_date
 function deleteCitoyen($conn, $id) {
     $sql = "DELETE FROM citoyens WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-        echo "Citoyen supprimé avec succès<br>";
+        echo json_encode(array("status" => "success", "message" => "Citoyen supprimé avec succès"));
     } else {
-        echo "Erreur de suppression : " . $conn->error . "<br>";
+        echo json_encode(array("status" => "error", "message" => "Erreur de suppression : " . $conn->error));
     }
 }
 
@@ -65,6 +68,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
-
-
 ?>
