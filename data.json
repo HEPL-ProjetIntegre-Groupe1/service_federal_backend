@@ -1,0 +1,128 @@
+{
+    "citoyens": [
+        {
+            "id": "1",
+            "nom": "Abdallah",
+            "prenom": "Noursine",
+            "date_naissance": "2000-03-20",
+            "adresse": "123 Rue Principale"
+        },
+        {
+            "id": "2",
+            "nom": "JO",
+            "prenom": "Sophie",
+            "date_naissance": "1992-08-24",
+            "adresse": "456 Avenue des Champs"
+        },
+        {
+            "id": "3",
+            "nom": "Durand",
+            "prenom": "Pierre",
+            "date_naissance": "1975-12-30",
+            "adresse": "789 Boulevard de la Libert\u00e9"
+        }
+    ],
+    "impots": [
+        {
+            "id": "1",
+            "montant": "1200.00",
+            "description": "Imp\u00f4t sur le revenu",
+            "citoyen_id": "1"
+        },
+        {
+            "id": "2",
+            "montant": "800.00",
+            "description": "Taxe fonci\u00e8re",
+            "citoyen_id": "2"
+        },
+        {
+            "id": "3",
+            "montant": "950.00",
+            "description": "Imp\u00f4t sur le revenu",
+            "citoyen_id": "3"
+        }
+    ],
+    "amendes": [
+        {
+            "id": "1",
+            "montant": "150.00",
+            "description": "Exc\u00e8s de vitesse",
+            "citoyen_id": "1"
+        },
+        {
+            "id": "2",
+            "montant": "75.50",
+            "description": "Stationnement interdit",
+            "citoyen_id": "2"
+        },
+        {
+            "id": "3",
+            "montant": "200.00",
+            "description": "Non-respect du feu rouge",
+            "citoyen_id": "3"
+        }
+    ],
+    "medecins": [
+        {
+            "id": "1",
+            "nom": "Leroy",
+            "prenom": "Michel",
+            "specialite": "Cardiologie"
+        },
+        {
+            "id": "2",
+            "nom": "Bernard",
+            "prenom": "Alice",
+            "specialite": "Dermatologie"
+        },
+        {
+            "id": "3",
+            "nom": "Petit",
+            "prenom": "Paul",
+            "specialite": "P\u00e9diatrie"
+        }
+    ],
+    "medicaments": [
+        {
+            "id": "1",
+            "nom": "Parac\u00e9tamol",
+            "description": "Antalgique et antipyr\u00e9tique"
+        },
+        {
+            "id": "2",
+            "nom": "Ibuprof\u00e8ne",
+            "description": "Anti-inflammatoire non st\u00e9ro\u00efdien"
+        },
+        {
+            "id": "3",
+            "nom": "Amoxicilline",
+            "description": "Antibiotique \u00e0 large spectre"
+        }
+    ],
+    "prescriptions": [
+        {
+            "id": "10",
+            "medecin_id": "1",
+            "citoyen_id": "1",
+            "medicament_id": "1",
+            "date_prescription": "2024-01-15",
+            "description": "Pour soulager la douleur"
+        },
+        {
+            "id": "11",
+            "medecin_id": "2",
+            "citoyen_id": "2",
+            "medicament_id": "2",
+            "date_prescription": "2024-02-10",
+            "description": "Pour r\u00e9duire l'inflammation"
+        },
+        {
+            "id": "12",
+            "medecin_id": "3",
+            "citoyen_id": "3",
+            "medicament_id": "3",
+            "date_prescription": "2024-03-05",
+            "description": "Pour traiter l'infection"
+        }
+    ]
+}
