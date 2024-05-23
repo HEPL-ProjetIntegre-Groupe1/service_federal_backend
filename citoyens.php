@@ -18,7 +18,7 @@ function readCitoyens($conn) {
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"]. " - Nom: " . $row["nom"]. " " . $row["prenom"]. " - Date de naissance: " . $row["date_naissance"]. " - Adresse: " . $row["adresse"]. "<br>";
+            echo "ID: " . $row["i"]. " - Nom: " . $row["nom"]. " " . $row["prenom"]. " - Date de naissance: " . $row["date_naissance"]. " - Adresse: " . $row["adresse"]. "<br>";
         }
     } else {
         echo "0 résultats<br>";
